@@ -15,8 +15,8 @@ export class SendEmailRepository{
     async sendEmail(data:SendEmailDto){
         try {
             await this.repository.send({
-                from:'thomazhilario5@gmail.com',
-                to:data.email,
+                from:data.email,
+                to:['thomazhilario5@gmail.com'],
                 subject:data.subject,
                 html:data.html
             })  
