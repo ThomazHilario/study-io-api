@@ -7,7 +7,7 @@ import { ResendModule } from 'nestjs-resend';
 @Module({
   imports:[
     ResendModule.forAsyncRoot({
-      useFactory: () => ({
+      useFactory: async () => ({
         apiKey:'re_QbTHjbu7_3Loo8YjdvqEa5sJLNDXYJ7gn'
       }),
     })
