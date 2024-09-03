@@ -2,6 +2,9 @@
   "name": "send-email-study-io",
   "version": "0.0.1",
   "description": "",
+  "engines": {
+    "node": "20.x"
+  },
   "author": "",
   "private": true,
   "license": "UNLICENSED",
