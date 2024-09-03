@@ -16,10 +16,10 @@ export class SendEmailRepository{
         try {
             await this.repository.send({
                 from:data.email,
-                to:['thomazhilario5@gmail.com'],
+                to:'thomazhilario5@gmail.com',
                 subject:data.subject,
                 html:data.html
-            })  
+            })           
         } catch (error) {
             console.log(error)
         }
