@@ -2,7 +2,7 @@ import * as firebase from 'firebase-admin'
 
 export function initializeFirebase(){
     // Service account
-    let serviceAccount = JSON.parse(process.env.Firebase)
+    let serviceAccount = JSON.parse(process.env.FIREBASE)
 
     // Iniciando app
     firebase.initializeApp({
