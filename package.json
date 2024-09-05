@@ -32,8 +32,10 @@
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "firebase-admin": "^12.4.0",
+    "glob": "^11.0.0",
     "nestjs-resend": "^0.0.3",
     "reflect-metadata": "^0.2.0",
+    "rimraf": "^6.0.1",
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
