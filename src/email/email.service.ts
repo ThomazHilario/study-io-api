@@ -12,6 +12,10 @@ export class SendEmailServices{
         this.service = repo
     }
 
+    async verifyUser(email:string){
+        return await this.service.verifyUser(email)
+    }
+
     async sendEmail(data:SendEmailDto){
         try {
             await this.service.sendEmail(data)

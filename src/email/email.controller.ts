@@ -25,8 +25,23 @@ export class EmailController {
     @Post()
     async sendEmail(@Body() userEmail:SendEmailDto){
         try {
-            this.sendEmailServices.sendEmail(userEmail)
-            return 'email enviado'
+
+            // Iniciando a verificação do email
+            const isEmailFromStudy = await this.sendEmailServices.verifyUser(userEmail.emailForVerification)
+            
+            // Caso o email seja um email cadastrado no app Study-io
+            if(isEmailFromStudy){
+                this.sendEmailServices.sendEmail(userEmail)
+                return JSON.stringify({
+                    message:'O seu email foi enviado para a equipe da Study-io'
+                })
+            }
+
+            // Caso o email não seja verficado
+            return JSON.stringify({
+                message:'Email não está cadastrado no app Study-io'
+            })
+            
         } catch (error) {
             return 'Algo deu errado!'
         }

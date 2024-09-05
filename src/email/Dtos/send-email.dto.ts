@@ -2,7 +2,10 @@ import { IsString } from 'class-validator'
 
 export class SendEmailDto{
     @IsString()
-    email:string
+    emailForVerification:string
+
+    @IsString()
+    emailForOrganization:string
 
     @IsString()
     subject:string
