@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { EmailModule } from './email/email.module';
+import { MainModule } from './main.module';
 import { initializeFirebase } from './firebase.config';
 import * as dotenv from 'dotenv'
 
@@ -11,7 +11,7 @@ dotenv.config()
 initializeFirebase()
 
 async function bootstrap() {
-  const app = await NestFactory.create(EmailModule, {cors:true});
+  const app = await NestFactory.create(MainModule, {cors:true});
   
   // Active cors
   app.enableCors()
