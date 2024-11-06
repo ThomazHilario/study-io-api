@@ -1,4 +1,10 @@
-import { Controller, Post, Body } from '@nestjs/common';
+// Nestjs
+import { Controller, Post, Body, Req, Res, Get } from '@nestjs/common';
+
+// Express
+import { Request, Response } from 'express';
+
+// Providers
 import { SignupService } from './signup.service';
 import { SignupDto } from "./dto/signup.dto";
 
@@ -6,12 +12,52 @@ import { SignupDto } from "./dto/signup.dto";
 export class SignupController {
   constructor(private readonly signupService: SignupService) {}
 
-  @Post()
-  async createUser(@Body() values:SignupDto){
+  @Get()
+  async verifyUser(@Req() request:Request){
     try {
-      return await this.signupService.createUser(values.email, values.username, values.password)
+      // Get cookie value
+      const userId = request.cookies['user']
+
+      // If have userId
+      if(userId) return await this.signupService.getUser(userId)
+
+      // Else not have userId
+      return {
+        message: 'Create user'
+      }
+
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  @Post()
+  async createUser(@Res() response:Response, @Body() values:SignupDto){
+    try {
+
+      // Create user and retur id
+      const userId = await this.signupService.createUser(values.email, values.username, values.password)
+
+      if(userId){
+
+        // Time cookies variables
+        const days = 360 // 15 days
+        const minutes = 60
+        const seconds = 60
+        const miliseconds = 1000
+
+        // Save id user in cookies
+        response.cookie('user', userId, {
+          maxAge: days * minutes * seconds * miliseconds
+        })
+
+        // Return
+        return response.send({
+          message:'Created user in database'
+        })
+      }
+    } catch (error) {
+      return response.send(error)
     }
   }
 }
