@@ -11,9 +11,85 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
+model User{
+  id String @id @default(uuid())
+  username String @unique
+  email String
+  password String
+  image String?
+
+  tasks Task[]
+  notes Note[]
+  kanban Kanban?
+}
+
+model Task {
+  id        String      @id @default(uuid())
+  name      String  
+  isChecked Boolean
+  userId    String 
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Note {
+  id String @id @default(uuid())
+  name String
+  date DateTime @default(now())
+  userId String
+  user User @relation(fields: [userId], references: [id])
+}
+
+// Task kanban
+model TaskKanban{
+  id        String      @id @default(uuid())
+  name      String  
+  isChecked Boolean
+  userId String
+  user Kanban @relation(fields: [userId], references: [id])
+}
+
+// Task in development in kanban
+model devTaskKanban{
+  id        String      @id @default(uuid())
+  name      String  
+  isChecked Boolean
+  userId String
+  user Kanban @relation(fields: [userId], references: [id])
+}
+
+// Task in pause in kanban
+model pauseTaskKanban{
+  id        String      @id @default(uuid())
+  name      String  
+  isChecked Boolean
+  userId String
+  user Kanban @relation(fields: [userId], references: [id])
+}
+
+// Task complete in kanban
+model completeTaskKanban{
+  id        String      @id @default(uuid())
+  name      String  
+  isChecked Boolean
+  userId String
+  user Kanban @relation(fields: [userId], references: [id])
+}
+
+// Kanban
+model Kanban{
+  id String @id
+
+  tasks TaskKanban[]
+  devTask devTaskKanban[]
+  pauseTask pauseTaskKanban[]
+  completeTask completeTaskKanban[]
+
+  user User @relation(fields: [id], references: [id])
+}
+
+// Themes
 model Themes{
   id String @id @default(uuid())
   image_url String
