@@ -40,11 +40,12 @@ export class SignupRepository{
         try {
             // Find user
             const user = await this.prisma.user.findUnique({
-                where:{id: id}
+                where:{id}
             })
 
             // Return user
-            if(user) return user
+            if(user) return { id: user.id }
+            
         } catch (error) {
             console.log(error)
         }

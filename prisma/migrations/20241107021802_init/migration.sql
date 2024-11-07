@@ -76,8 +76,20 @@ CREATE TABLE "Kanban" (
     CONSTRAINT "Kanban_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Themes" (
+    "id" TEXT NOT NULL,
+    "image_url" TEXT NOT NULL,
+    "video_url" TEXT NOT NULL,
+
+    CONSTRAINT "Themes_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "Task" ADD CONSTRAINT "Task_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

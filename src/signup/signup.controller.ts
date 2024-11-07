@@ -19,7 +19,9 @@ export class SignupController {
       const userId = request.cookies['user']
 
       // If have userId
-      if(userId) return await this.signupService.getUser(userId)
+      if(userId){
+        return await this.signupService.getUser(userId)
+      }
 
       // Else not have userId
       return {
