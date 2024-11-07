@@ -4,9 +4,10 @@ import { ThemesModule } from './themes/themes.module';
 import { PrismaService } from "./prisma.service";
 import { SignupModule } from './signup/signup.module';
 import { SignInModule } from './sign-in/sign-in.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-    imports:[EmailModule, ThemesModule, SignupModule, SignInModule],
+    imports:[EmailModule, ThemesModule, SignupModule, SignInModule, AuthModule],
     providers:[PrismaService],
     exports:[PrismaService]
 })

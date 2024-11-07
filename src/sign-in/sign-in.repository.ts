@@ -12,21 +12,6 @@ export class SignInRepository{
     // Constructor
     constructor(private prisma:PrismaService){}
 
-    // Verify user 
-    async verifyUser(id:string){
-        try {
-            // Find user
-            const user = await this.prisma.user.findUnique({
-                where:{id}
-            })
-
-            // return id user
-            if(user) return {id:user.id}
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     // SignIN user
     async signIn(email:string, password:string){
         try {

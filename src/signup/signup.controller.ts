@@ -1,8 +1,8 @@
 // Nestjs
-import { Controller, Post, Body, Req, Res, Get } from '@nestjs/common';
+import { Controller, Post, Body, Res } from '@nestjs/common';
 
 // Express
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 // Providers
 import { SignupService } from './signup.service';
@@ -11,27 +11,6 @@ import { SignupDto } from "./dto/signup.dto";
 @Controller('signup')
 export class SignupController {
   constructor(private readonly signupService: SignupService) {}
-
-  @Get()
-  async verifyUser(@Req() request:Request){
-    try {
-      // Get cookie value
-      const userId = request.cookies['user']
-
-      // If have userId
-      if(userId){
-        return await this.signupService.getUser(userId)
-      }
-
-      // Else not have userId
-      return {
-        message: 'Create user'
-      }
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   @Post()
   async createUser(@Res() response:Response, @Body() values:SignupDto){

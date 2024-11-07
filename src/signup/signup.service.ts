@@ -13,9 +13,4 @@ export class SignupService {
     async createUser(email:string, username:string, password:string){
         return await this.SignupRepository.createUser(email, username, password)
     }
-
-    // Get user
-    async getUser(id:string){
-        return await this.SignupRepository.getUser(id)
-    }
 }

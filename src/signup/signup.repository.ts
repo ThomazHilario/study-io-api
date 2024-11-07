@@ -34,20 +34,4 @@ export class SignupRepository{
             }      
         }
     }
-
-    // Find user in database
-    async getUser(id:string){
-        try {
-            // Find user
-            const user = await this.prisma.user.findUnique({
-                where:{id}
-            })
-
-            // Return user
-            if(user) return { id: user.id }
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }
 }
