@@ -30,4 +30,19 @@ export class AuthRepository{
             console.log(error)
         }
     }
+
+    // get Data user
+    async getDataUser(id:string){
+        try {
+            // Find user
+            const user = await this.prisma.user.findUnique({
+                where:{id}
+            })
+
+            // Case have user
+            if(user) return user
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, Req, Param } from '@nestjs/common';
 
 // Service
 import { AuthService } from './auth.service';
@@ -17,5 +17,10 @@ export class AuthController {
 
     // Return result
     return await this.authService.verifyUserInCookieStorage(id)
+  }
+
+  @Get('/:id')
+  async getDataUser(@Param('id') id:string){
+    return await this.authService.getDataUser(id)
   }
 }
