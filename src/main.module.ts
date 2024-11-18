@@ -6,9 +6,10 @@ import { SignupModule } from './signup/signup.module';
 import { SignInModule } from './sign-in/sign-in.module';
 import { AuthModule } from './auth/auth.module';
 import { TaskModule } from './task/task.module';
+import { NotesModule } from './notes/notes.module';
 
 @Module({
-    imports:[EmailModule, ThemesModule, SignupModule, SignInModule, AuthModule, TaskModule],
+    imports:[EmailModule, ThemesModule, SignupModule, SignInModule, AuthModule, TaskModule, NotesModule],
     providers:[PrismaService],
     exports:[PrismaService]
 })
