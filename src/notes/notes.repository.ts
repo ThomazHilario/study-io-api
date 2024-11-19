@@ -14,9 +14,7 @@ export class NotesRepository{
         try {
             // Get all notes
             const notes = await this.prisma.note.findMany({
-                where:{
-                    id:userId
-                }
+                where:{ userId }
             })  
             
             // Return notes
@@ -34,7 +32,7 @@ export class NotesRepository{
                 data:{
                     id:crypto.randomUUID(),
                     name,
-                    date: String(Date.now()),
+                    date: new Date(),
                     userId:userId
                 }
             })
@@ -59,7 +57,7 @@ export class NotesRepository{
 
                 data:{
                     name:name,
-                    date:String(Date.now())
+                    date:new Date()
                 }
             })
 
@@ -68,7 +66,11 @@ export class NotesRepository{
                 message:'Note updated!'
             }
         } catch (error) {
-            console.log(error)
+            if(error){
+                return{
+                    message:'This task not exist!'
+                }
+            }
         }
     }
 
@@ -87,7 +89,11 @@ export class NotesRepository{
                 message:'Note deleted!'
             }
         } catch (error) {
-            console.log(error)
+            if(error){
+                return{
+                    message:'This task not exist!'
+                }
+            }
         }
     }
 }
