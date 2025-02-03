@@ -1,5 +1,5 @@
 // Cookie
-import * as cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser'
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { MainModule } from './main.module';
