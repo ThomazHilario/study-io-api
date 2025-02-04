@@ -1,5 +1,5 @@
 // NestJs
-import { Controller, Get, Res, Param } from '@nestjs/common';
+import { Controller, Post, Res, Body } from '@nestjs/common';
 
 // Service
 import { SignInService } from './sign-in.service';
@@ -14,8 +14,8 @@ import { SignInDto } from './Dto/signIn.dto';
 export class SignInController {
   constructor(private readonly signInService: SignInService) {}
 
-  @Get('/:email/:password')
-  async signIn(@Param() credentials:SignInDto, @Res() response:Response){
+  @Post()
+  async signIn(@Body() credentials:SignInDto, @Res() response:Response){
     const result = await this.signInService.signIn(credentials.email, credentials.password)
 
     // Return id
