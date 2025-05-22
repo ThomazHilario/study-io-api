@@ -17,25 +17,12 @@ export class SignupController {
     try {
 
       // Create user and retur id
-      const userId = await this.signupService.createUser(values.email, values.username, values.password)
+      const user = await this.signupService.createUser(values.email, values.username, values.password)
 
-      if(userId){
-
-        // Time cookies variables
-        const days = 360 // 15 days
-        const minutes = 60
-        const seconds = 60
-        const miliseconds = 1000
-
-        // Save id user in cookies
-        response.cookie('user', userId, {
-          maxAge: days * minutes * seconds * miliseconds
-        })
+      if(user){
 
         // Return
-        return response.send({
-          message:'Created user in database'
-        })
+        return response.send(user)
       }
     } catch (error) {
       return response.send(error)

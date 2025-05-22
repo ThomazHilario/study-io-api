@@ -1,12 +1,26 @@
+// Nest Common
 import { Injectable } from "@nestjs/common";
 
-// Prisma
+// Dto
+import { AuthRegisterDto } from "./dto/auth.register.dto";
+import { AuthLoginDto } from "./dto/auth.login.dto";
+
+// Services
+import { SignInService } from "src/sign-in/sign-in.service";
+import { SignupService } from "src/signup/signup.service";
 import { PrismaService } from "src/prisma.service";
+import { JwtService } from "@nestjs/jwt";
+
 
 @Injectable()
 export class AuthRepository{
     // Constructor
-    constructor(private prisma:PrismaService){}
+    constructor(
+        private prisma:PrismaService,
+        private signUpService: SignupService,
+        private signInService: SignInService,
+        private jwtService: JwtService
+    ){}
 
     // Verify user
     async verifyUserInCookieStorage(id:string){
@@ -44,5 +58,28 @@ export class AuthRepository{
         } catch (error) {
             console.log(error)
         }
+    }
+
+    // Register user
+    async registerUser(data: AuthRegisterDto){
+        const user = await this.signUpService.createUser(data.email, data.username, data.password)
+
+        if(user){
+            const token = this.jwtService.sign(user)
+
+            return { token }
+        }
+        
+    }
+
+    // Login user
+    async loginUser(data: AuthLoginDto){
+        const user = await this.signInService.signIn(data.email, data.password)
+
+        if(user){
+            const token = this.jwtService.sign(user)
+
+            return { token }
+        } 
     }
 }

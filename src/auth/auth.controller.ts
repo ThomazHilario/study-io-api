@@ -1,26 +1,28 @@
-import { Controller, Get, Req, Param } from '@nestjs/common';
+import { Controller, Get, Req, Param, Post, Body } from '@nestjs/common';
 
 // Service
 import { AuthService } from './auth.service';
 
 // Express
-import { Request } from 'express';
+import { Response } from 'express';
+
+// Dto
+import { AuthRegisterDto } from './dto/auth.register.dto';
+import { AuthLoginDto } from './dto/auth.login.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService
+  ) {}
 
-  @Get()
-  async verifyUserInCookieStorage(@Req() request:Request){
-    // Get id in cookie storage
-    const id = request.cookies['user']
-
-    // Return result
-    return await this.authService.verifyUserInCookieStorage(id)
+  @Post('register')
+  async registerUser(@Body() data: AuthRegisterDto, res:Response){
+    return this.authService.registerUser(data)
   }
 
-  @Get('/:id')
-  async getDataUser(@Param('id') id:string){
-    return await this.authService.getDataUser(id)
+  @Post('login')
+  async loginUser(@Body() data:AuthLoginDto){
+    return this.authService.loginUser(data)
   }
 }

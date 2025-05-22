@@ -14,5 +14,6 @@ import { PrismaService } from 'src/prisma.service';
 @Module({
   controllers: [SignInController],
   providers: [SignInRepository, SignInService, PrismaService],
+  exports:[SignInService]
 })
 export class SignInModule {}

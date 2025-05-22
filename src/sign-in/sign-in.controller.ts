@@ -21,9 +21,6 @@ export class SignInController {
     // Return id
     if(result){
 
-      // Save id in cookie storage
-      response.cookie('user', result.id)
-
       // Return result
       return response.send(result)
     }

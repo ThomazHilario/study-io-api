@@ -1,14 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { ResendService } from "nestjs-resend";
 import { SendEmailDto } from "./Dtos/send-email.dto";
-import * as firebase from 'firebase-admin'
 
 
 @Injectable()
 export class SendEmailRepository{
 
     repository:ResendService
-    firebase: FirebaseFirestore.CollectionReference = firebase.firestore().collection('users')
 
     constructor(resend: ResendService){
         this.repository = resend
@@ -21,12 +19,8 @@ export class SendEmailRepository{
             let usersArray = []
 
             // Buscando usuários do banco de dados
-            const users = await this.firebase.get()
 
             // Percorrendo cada snap e adicionando usuário ao array
-            users.forEach(snap => {
-                usersArray.push(snap.data())
-            })
 
             // Buscando o usuário que está enviando o feedback
             const emailIsVerifiedOrNo = usersArray.filter(user => user.dataUser.email === email)

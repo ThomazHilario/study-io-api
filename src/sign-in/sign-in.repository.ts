@@ -1,5 +1,5 @@
 // NestJS
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, HttpStatus, Injectable } from "@nestjs/common";
 
 // Bcrypt
 import * as bcrypt from 'bcrypt'
@@ -28,19 +28,20 @@ export class SignInRepository{
                 // Compare hash in databse with hash digited
                 const passwordIsEqualForHash = await bcrypt.compare(password, user.password)
 
-                // return id user
-                return passwordIsEqualForHash ? {id: user.id} : {
-                    message:'Password invalid!'
-                }
+                if(passwordIsEqualForHash) return user
+               
+                throw new Error('Password invalid!')
             }
 
             //  message for user
-            throw {
-                message:'Email not is exist in database!'
-            }
+            throw new Error('Email not is exist in database!')
             
         } catch (error) {
-            return error
+            throw new BadRequestException ({
+                statusCode: HttpStatus.CONFLICT,
+                typeError: 'Login',
+                message: error.message
+            })      
         }
     }
 }

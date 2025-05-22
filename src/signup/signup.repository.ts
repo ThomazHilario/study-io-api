@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, HttpStatus, BadRequestException  } from "@nestjs/common";
 import { PrismaService } from "src/prisma.service";
 
 // Bcrypt
@@ -13,11 +13,20 @@ export class SignupRepository{
     async createUser(email:string, username:string, password:string){
         try {
 
+            const user = await this.prisma.user.findUnique({ where:{
+                email:email
+            } })
+
+            // User exist in database
+            if(user){
+                throw new Error('This user exist in database!')
+            }
+
             // Generate hash
             const hashPassword = await bcrypt.hash(password, 10)
 
             // Create user
-            const user = await this.prisma.user.create({
+            const newUser = await this.prisma.user.create({
                 data:{
                     email,
                     username,
@@ -26,12 +35,13 @@ export class SignupRepository{
             })
             
             // Return user
-            return user.id
+            return newUser
         } catch (error) { 
-            throw {
-                message: 'not is possible user create in database',
-                error:error
-            }      
+            throw new BadRequestException ({
+                statusCode: HttpStatus.CONFLICT,
+                typeError: 'not is possible user create in database!',
+                message: error.message
+            })      
         }
     }
 }

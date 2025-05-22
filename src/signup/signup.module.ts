@@ -7,5 +7,6 @@ import { PrismaService } from 'src/prisma.service';
 @Module({
   controllers: [SignupController],
   providers: [SignupService, SignupRepository, PrismaService],
+  exports:[SignupService]
 })
 export class SignupModule {}
