@@ -22,26 +22,14 @@ export class AuthRepository{
         private jwtService: JwtService
     ){}
 
-    // Verify user
-    async verifyUserInCookieStorage(id:string){
+    // Verify token
+    verifyToken(token:string){
         try {
-            if(id){
-                // Find user
-                const user = await this.prisma.user.findUnique({
-                    where:{id}
-                })
-
-                // if have user
-                if(user){
-                    return {id: user.id}
-                }
-            }
-
-            return {
-                message:"Session Expired!"
+            if(this.jwtService.verify(token)){
+                return true
             }
         } catch (error) {
-            console.log(error)
+            return false
         }
     }
 

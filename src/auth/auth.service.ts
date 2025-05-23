@@ -12,8 +12,8 @@ export class AuthService {
     // Constructor
     constructor(private AuthRepository:AuthRepository){}
 
-    async verifyUserInCookieStorage(id:string){
-        return this.AuthRepository.verifyUserInCookieStorage(id)
+    verifyToken(token:string){
+        return this.AuthRepository.verifyToken(token)
     }
 
     // get data user

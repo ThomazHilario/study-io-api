@@ -8,7 +8,6 @@ import * as dotenv from 'dotenv'
 // Iniciando o dotenv
 dotenv.config()
 
-
 async function bootstrap() {
   const app = await NestFactory.create(MainModule, {cors:true});
   
