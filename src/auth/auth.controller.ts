@@ -19,8 +19,15 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('onAuth')
-  async onAuth(@Headers() headers){
+  async onAuth(@Headers() headers:any){
     return this.authService.verifyToken(headers.authorization.split(' ')[1])
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('getData')
+  async getDataUser(@Headers() headers:any){
+    const token = headers.authorization.split(' ')[1]
+    return await this.authService.getData(token)
   }
 
   @Post('register')

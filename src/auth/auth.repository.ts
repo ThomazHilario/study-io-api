@@ -34,15 +34,34 @@ export class AuthRepository{
     }
 
     // get Data user
-    async getDataUser(id:string){
+    async getData(token:string){
         try {
-            // Find user
-            const user = await this.prisma.user.findUnique({
-                where:{id}
-            })
+            // Find decoded information user for token
+            const user = this.jwtService.verify(token)
 
-            // Case have user
-            if(user) return user
+            // Request tasks, notes and kanban for user
+            const [tasks, notes, kanban] = await Promise.all([
+                this.prisma.task.findMany({ where:{ userId: user.id } }),
+                this.prisma.note.findMany({ where:{ userId: user.id } }),
+                this.prisma.kanban.findMany({
+                     select: { 
+                        tasks: { where: { userId: user.id } }, 
+                        devTask: { where: { userId: user.id } },
+                        pauseTask: { where: { userId: user.id } }, 
+                        completeTask: { where: { userId: user.id } }, 
+                    } 
+                })
+            ])
+
+            // New template data
+            const newUserData = {
+                ...user,
+                tasks, 
+                notes,
+                kanban
+            }
+
+            return newUserData
         } catch (error) {
             console.log(error)
         }
