@@ -11,7 +11,7 @@ import { AuthRegisterDto } from './dto/auth.register.dto';
 import { AuthLoginDto } from './dto/auth.login.dto';
 
 // Guard
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
