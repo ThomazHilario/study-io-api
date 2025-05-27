@@ -1,7 +1,7 @@
 // Modules
 import { Module } from '@nestjs/common';
-import { SignInModule } from 'src/sign-in/sign-in.module';
-import { SignupModule } from 'src/signup/signup.module';
+import { SignInModule } from '../sign-in/sign-in.module';
+import { SignupModule } from '../signup/signup.module';
 import { JwtModule } from '@nestjs/jwt';
 
 // Controller
@@ -14,7 +14,7 @@ import { AuthRepository } from './auth.repository';
 import { AuthService } from './auth.service';
 
 // Prisma
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from '../prisma.service';
 
 // env
 import 'dotenv/config'
