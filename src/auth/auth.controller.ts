@@ -17,6 +17,11 @@ import { AuthGuard } from '../guards/auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Get()
+  async welcome(){
+    return 'Hello, raquest login in /login or /register'
+  }
+
   @UseGuards(AuthGuard)
   @Get('onAuth')
   async onAuth(@Headers() headers:any){
@@ -32,11 +37,11 @@ export class AuthController {
 
   @Post('register')
   async registerUser(@Body() data: AuthRegisterDto, res:Response){
-    return this.authService.registerUser(data)
+    return await this.authService.registerUser(data)
   }
 
   @Post('login')
   async loginUser(@Body() data:AuthLoginDto){
-    return this.authService.loginUser(data)
+    return await this.authService.loginUser(data)
   }
 }
