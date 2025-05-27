@@ -17,7 +17,7 @@ import { PrismaService } from "./prisma.service";
 import { KeepAliveService } from "./KeepAlive.service";
 
 @Module({
-    imports:[EmailModule, ThemesModule, AuthModule, TaskModule, NotesModule, ScheduleModule.forRoot()],
+    imports:[AuthModule, TaskModule, NotesModule, ScheduleModule.forRoot()],
     providers:[PrismaService, KeepAliveService],
     exports:[PrismaService]
 })
