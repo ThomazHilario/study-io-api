@@ -19,7 +19,7 @@ export class AuthController {
 
   @Get()
   async welcome(){
-    return 'Hello, raquest login in /login or /register'
+    return { message: 'Hello, raquest login in /login or /register' }
   }
 
   @UseGuards(AuthGuard)
