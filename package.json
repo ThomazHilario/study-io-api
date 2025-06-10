@@ -2,7 +2,7 @@
   "name": "send-email-study-io",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Thomaz Alves",
   "engines": {
     "node": "20.x",
     "npm": "10.x"
@@ -48,6 +48,7 @@
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
+    "@stryker-mutator/jest-runner": "^9.0.1",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/express": "^4.17.17",

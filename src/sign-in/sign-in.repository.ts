@@ -5,7 +5,7 @@ import { BadRequestException, HttpStatus, Injectable } from "@nestjs/common";
 import * as bcrypt from 'bcrypt'
 
 // Prisma service
-import { PrismaService } from "src/prisma.service";
+import { PrismaService } from "../prisma.service";
 
 @Injectable()
 export class SignInRepository{
