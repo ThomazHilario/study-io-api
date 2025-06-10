@@ -27,8 +27,11 @@ describe('SignInService', () => {
         // Mock the signIn method of the SignInService
         jest.spyOn(signInService, 'signIn').mockResolvedValue(signInServiceMock.signIn())
 
+        // Mock the response object
+        const data = await signInServiceMock.signIn()
+
         // Simulating a successful sign-in
-        const result = await signInService.signIn('cIzgI@example.com', 'hashedPassword123')
+        const result = await signInService.signIn(data.email, data.password)
 
         // Expect the result to match the mock data
         expect(result).toEqual({

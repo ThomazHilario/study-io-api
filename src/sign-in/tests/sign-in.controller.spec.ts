@@ -6,6 +6,7 @@ import { PrismaService } from "../../prisma.service";
 
 // Mocks
 import { signInServiceMock } from "./mocks/sign-in.mock";
+import e from "express";
 
 describe('SignInController', () => {
     let signInController: SignInController
@@ -36,11 +37,13 @@ describe('SignInController', () => {
             send: jest.fn(),
         } as any
 
+        // Mock the data returned by the signInServiceMock
+        const data = await signInServiceMock.signIn()
         
         // Simulating a successful sign-in
         const result = await signInController.signIn({
-            email: 'cIzgI@example.com',
-            password: 'hashedPassword123'
+            email: data.email,
+            password: data.password
         }, response)
 
         // Verify that the signIn method was called with the correct parameters
