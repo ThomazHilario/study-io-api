@@ -6,8 +6,6 @@ import { ScheduleModule } from "@nestjs/schedule";
 // Modules
 import { EmailModule } from "./email/email.module";
 import { ThemesModule } from './themes/themes.module';
-import { SignupModule } from './signup/signup.module';
-import { SignInModule } from './sign-in/sign-in.module';
 import { AuthModule } from './auth/auth.module';
 import { TaskModule } from './task/task.module';
 import { NotesModule } from './notes/notes.module';
@@ -15,9 +13,10 @@ import { NotesModule } from './notes/notes.module';
 // Service 
 import { PrismaService } from "./prisma.service";
 import { KeepAliveService } from "./KeepAlive.service";
+import { StudyBffModule } from "./study-bff/study-bff.module";
 
 @Module({
-    imports:[AuthModule, TaskModule, NotesModule, ScheduleModule.forRoot()],
+    imports:[AuthModule, TaskModule, NotesModule, ScheduleModule.forRoot(), StudyBffModule],
     providers:[PrismaService, KeepAliveService],
     exports:[PrismaService]
 })

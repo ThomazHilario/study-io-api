@@ -15,5 +15,6 @@ import { TaskController } from './task.controller';
 @Module({
   controllers: [TaskController],
   providers: [PrismaService, TaskRepository, TaskService],
+  exports: [TaskService],
 })
 export class TaskModule {}
