@@ -10,7 +10,7 @@ import { PrismaService } from "../prisma.service";
 @Injectable()
 export class SignInRepository{
     // Constructor
-    constructor(private prisma:PrismaService){}
+    constructor(private readonly prisma:PrismaService){}
 
     // SignIN user
     async signIn(email:string, password:string){

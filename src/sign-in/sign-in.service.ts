@@ -6,7 +6,7 @@ import { SignInRepository } from './sign-in.repository';
 @Injectable()
 export class SignInService {
     // Constructor
-    constructor(private SignInRepository:SignInRepository){}
+    constructor(private readonly SignInRepository:SignInRepository){}
 
     // SignIn
     async signIn(email:string, password:string){

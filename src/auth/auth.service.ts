@@ -10,7 +10,7 @@ import { AuthLoginDto } from './dto/auth.login.dto';
 @Injectable()
 export class AuthService {
     // Constructor
-    constructor(private AuthRepository:AuthRepository){}
+    constructor(private readonly AuthRepository:AuthRepository){}
 
     verifyToken(token:string){
         return this.AuthRepository.verifyToken(token)

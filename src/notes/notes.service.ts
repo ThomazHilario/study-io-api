@@ -7,7 +7,7 @@ import { NotesRepository } from './notes.repository';
 @Injectable()
 export class NotesService {
     // Constructor
-    constructor(private NotesRepository:NotesRepository){}
+    constructor(private readonly NotesRepository:NotesRepository){}
 
     // Get all notes
     async getAllNotes(userId:string){

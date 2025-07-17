@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class SignupRepository{
     // Constructor
-    constructor(private prisma:PrismaService){}
+    constructor(private readonly prisma:PrismaService){}
 
     // Create user in database
     async createUser(email:string, username:string, password:string){

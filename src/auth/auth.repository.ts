@@ -16,10 +16,10 @@ import { JwtService } from "@nestjs/jwt";
 export class AuthRepository{
     // Constructor
     constructor(
-        private prisma:PrismaService,
-        private signUpService: SignupService,
-        private signInService: SignInService,
-        private jwtService: JwtService
+        private readonly prisma:PrismaService,
+        private readonly signUpService: SignupService,
+        private readonly signInService: SignInService,
+        private readonly jwtService: JwtService
     ){}
 
     // Verify token
@@ -29,6 +29,7 @@ export class AuthRepository{
                 return true
             }
         } catch (error) {
+            console.log('Error verify token', error)
             return false
         }
     }

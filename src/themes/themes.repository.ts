@@ -8,7 +8,7 @@ import { PrismaService } from 'src/prisma.service'
 export class ThemesRepository{
 
     // Constructor
-    constructor(private prisma:PrismaService){}
+    constructor(private readonly prisma:PrismaService){}
 
     // Return all themes
     async findThemes(){

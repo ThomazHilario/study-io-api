@@ -7,7 +7,7 @@ import { PrismaService } from "src/prisma.service";
 @Injectable()
 export class NotesRepository{
     // Constructor
-    constructor(private prisma:PrismaService){}
+    constructor(private readonly prisma:PrismaService){}
 
     // Get all notes
     async getAllNotes(userId:string){

@@ -3,7 +3,7 @@ import { StudyBffRepository } from "./study-bff-repository";
 
 @Injectable()
 export class StudyBffService{
-    constructor(private studyBffRepository: StudyBffRepository){}
+    constructor(private readonly studyBffRepository: StudyBffRepository){}
 
 
     async RequestStudyBff(userId: string) {

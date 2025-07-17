@@ -5,7 +5,7 @@ import { ThemesRepository } from './themes.repository';
 
 @Injectable()
 export class ThemesService {
-    constructor(private ThemesRepository:ThemesRepository){}
+    constructor(private readonly ThemesRepository:ThemesRepository){}
 
     // Find all themes
     async findThemes(){

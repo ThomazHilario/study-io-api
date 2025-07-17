@@ -6,8 +6,8 @@ import { NotesService } from "src/notes/notes.service";
 @Injectable()
 export class StudyBffRepository {
     constructor(
-        private TaskService: TaskService,
-        private NotesService: NotesService
+        private readonly TaskService: TaskService,
+        private readonly NotesService: NotesService
     ){}
 
     async RequestStudyBff(userId: string) {

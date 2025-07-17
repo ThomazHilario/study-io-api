@@ -10,7 +10,7 @@ import { PrismaService } from "src/prisma.service";
 @Injectable()
 export class TaskRepository{
     // Constructor
-    constructor(private prisma:PrismaService){}
+    constructor(private readonly prisma:PrismaService){}
 
     // Create task
     async createTask(name:string, userId:string){

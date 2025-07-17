@@ -9,7 +9,7 @@ import { TaskRepository } from './task.repository';
 @Injectable()
 export class TaskService {
     // Constructor
-    constructor(private TaskRepository:TaskRepository){}
+    constructor(private readonly TaskRepository:TaskRepository){}
 
     // Create task
     async createTask(name:string, userId:string){

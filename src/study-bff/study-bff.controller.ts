@@ -3,7 +3,7 @@ import { StudyBffService } from "./study-bff-service";
 
 @Controller('study-bff')
 export class StudyBffController {
-    constructor(private StudyBffService: StudyBffService){}
+    constructor(private readonly StudyBffService: StudyBffService){}
 
     @Get('/:userId')
     async RequestStudyBff(@Param('userId') userId: string) {
