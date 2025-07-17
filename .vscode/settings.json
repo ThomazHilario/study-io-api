@@ -1,3 +1,7 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "thomazhilario",
+        "projectKey": "ThomazHilario_study-io-api"
+    }
 }

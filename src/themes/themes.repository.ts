@@ -20,14 +20,10 @@ export class ThemesRepository{
         try {
 
             // allUsers
-            let allUsers = []
-
-            // Find All users from firebase
-
-            // Push user in allUsers
+            let allUsers = await this.prisma.user.findMany()
 
             // Get admin verification
-            const verifiedUser = allUsers.find(user => user.dataUser.email === process.env.TOKEN)
+            const verifiedUser = allUsers.find(user => user.email === process.env.TOKEN)
 
             // Logic case is verified admin
             if(verifiedUser){
