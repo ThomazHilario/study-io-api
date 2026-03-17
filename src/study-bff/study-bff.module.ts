@@ -4,9 +4,10 @@ import { StudyBffService } from "./study-bff-service";
 import { StudyBffRepository } from "./study-bff-repository";
 import { TaskModule } from "src/task/task.module";
 import { NotesModule } from "src/notes/notes.module";
+import { AuthModule } from "src/auth/auth.module";
 
 @Module({
-    imports: [TaskModule, NotesModule],
+    imports: [TaskModule, NotesModule, AuthModule],
     controllers: [StudyBffController],
     providers: [StudyBffService, StudyBffRepository],
 })

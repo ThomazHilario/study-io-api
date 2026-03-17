@@ -19,7 +19,7 @@ model User{
   username String @unique
   email String @unique
   password String
-  image String?
+  imageUrl String?
 
   tasks Task[]
   notes Note[]

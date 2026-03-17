@@ -31,5 +31,6 @@ import 'dotenv/config'
   ],
   controllers: [AuthController],
   providers: [AuthRepository, AuthService, PrismaService],
+  exports: [AuthService],
 })
 export class AuthModule {}

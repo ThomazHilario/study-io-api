@@ -40,29 +40,7 @@ export class AuthRepository{
             // Find decoded information user for token
             const user = this.jwtService.verify(token)
 
-            // Request tasks, notes and kanban for user
-            const [tasks, notes, kanban] = await Promise.all([
-                this.prisma.task.findMany({ where:{ userId: user.id } }),
-                this.prisma.note.findMany({ where:{ userId: user.id } }),
-                this.prisma.kanban.findMany({
-                     select: { 
-                        tasks: { where: { userId: user.id } }, 
-                        devTask: { where: { userId: user.id } },
-                        pauseTask: { where: { userId: user.id } }, 
-                        completeTask: { where: { userId: user.id } }, 
-                    } 
-                })
-            ])
-
-            // New template data
-            const newUserData = {
-                ...user,
-                tasks, 
-                notes,
-                kanban
-            }
-
-            return newUserData
+            return user
         } catch (error) {
             console.log(error)
         }

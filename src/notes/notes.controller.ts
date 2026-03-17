@@ -1,20 +1,22 @@
-import { Body, Controller, Delete, Get, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Patch, Post, Req, UseGuards } from '@nestjs/common';
 
 // Service
 import { NotesService } from './notes.service';
 
-// Express
-import { Request } from 'express';
 import { NotesDto } from './dto/notes.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('notes')
 export class NotesController {
-  constructor(private readonly notesService: NotesService) {}
+  constructor(private readonly notesService: NotesService, private readonly AuthService: AuthService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
-  async getAllNotes(@Req() req:Request){
-    // Get id from userId
-    const userId = req.cookies['user']
+  async getAllNotes(@Headers() headers: any){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+
+    const userId = data.id
 
     // Return all notes
     if(userId){
@@ -27,10 +29,12 @@ export class NotesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Post()
-  async createNote(@Req() req:Request, @Body() values:NotesDto){
-    // Get id from userId
-    const userId = req.cookies['user']
+  async createNote(@Headers() headers: any, @Body() values:NotesDto){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+
+    const userId = data.id
 
     // Return all notes
     if(userId){
@@ -43,10 +47,12 @@ export class NotesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch()
-  async updateNote(@Req() req:Request, @Body() values:NotesDto){
-    // Get id from userId
-    const userId = req.cookies['user']
+  async updateNote(@Headers() headers: any, @Body() values:NotesDto){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+
+    const userId = data.id
 
     // Return all notes
     if(userId){
@@ -59,10 +65,12 @@ export class NotesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete()
-  async deleteNote(@Req() req:Request, @Body() values:NotesDto){
-    // Get id from userId
-    const userId = req.cookies['user']
+  async deleteNote(@Headers() headers: any, @Body() values:NotesDto){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+
+    const userId = data.id
 
     // Return all notes
     if(userId){

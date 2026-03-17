@@ -1,7 +1,4 @@
-import { Controller, Post, Get, Patch, Delete, Body, Req, Param} from '@nestjs/common';
-
-// Express
-import { Request } from 'express';
+import { Controller, Post, Get, Patch, Delete, Body, Req, Param, Headers, UseGuards} from '@nestjs/common';
 
 // Dto
 import { TaskDto } from './dto/task.dto';
@@ -9,16 +6,19 @@ import { TaskUpdateDto } from './dto/task.update.dto';
 
 // Service
 import { TaskService } from './task.service';
+import { AuthService } from 'src/auth/auth.service';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('task')
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(private readonly taskService: TaskService, private readonly AuthService: AuthService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
-  async createTask(@Req() req:Request, @Body() task:TaskDto){
+  async createTask(@Headers() headers: any, @Body() task:TaskDto){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
-    // Get id user in cookie storage
-    const userId = req.cookies['user']
+    const userId = data.id
 
     // Create task
     if(userId){
@@ -31,10 +31,12 @@ export class TaskController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  async getAllTasksForUser(@Req() req:Request){
-    // Get id user in cookie storage
-    const userId = req.cookies['user']
+  async getAllTasksForUser(@Headers() headers: any){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+
+    const userId = data.id
 
     // Find all tasks for user
     if(userId){
@@ -47,10 +49,12 @@ export class TaskController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch()
-  async updateTask(@Req() req:Request, @Body() taskValues:TaskUpdateDto){
-    // Get id user in cookie storage
-    const userId = req.cookies['user'] 
+  async updateTask(@Headers() headers: any, @Body() taskValues:TaskUpdateDto){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+
+    const userId = data.id
 
     // Update task
     if(userId){
@@ -63,10 +67,12 @@ export class TaskController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete('/:taskId')
-  async deleteTask(@Req() req:Request, @Param('taskId') taskId:string){
-    // Get id user in cookie storage
-    const userId = req.cookies['user']
+  async deleteTask(@Headers() headers: any, @Param('taskId') taskId:string){
+    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+
+    const userId = data.id
 
     // Delete task
     if(userId){

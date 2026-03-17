@@ -7,8 +7,6 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { EmailModule } from "./email/email.module";
 import { ThemesModule } from './themes/themes.module';
 import { AuthModule } from './auth/auth.module';
-import { TaskModule } from './task/task.module';
-import { NotesModule } from './notes/notes.module';
 
 // Service 
 import { PrismaService } from "./prisma.service";
@@ -17,7 +15,7 @@ import { StudyBffModule } from "./study-bff/study-bff.module";
 import { ConfigModule } from "@nestjs/config";
 
 @Module({
-    imports:[AuthModule, TaskModule, NotesModule, ThemesModule, ScheduleModule.forRoot(), ConfigModule.forRoot(), StudyBffModule],
+    imports:[AuthModule, ThemesModule, ScheduleModule.forRoot(), ConfigModule.forRoot(), StudyBffModule],
     providers:[PrismaService, KeepAliveService],
     exports:[PrismaService]
 })

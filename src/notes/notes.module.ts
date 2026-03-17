@@ -11,9 +11,11 @@ import { NotesService } from './notes.service';
 
 // Prisma
 import { PrismaService } from 'src/prisma.service';
+import { AuthModule } from 'src/auth/auth.module';
 
 
 @Module({
+  imports: [AuthModule],
   controllers: [NotesController],
   providers: [NotesRepository, NotesService, PrismaService],
   exports:[NotesService]

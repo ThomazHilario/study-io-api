@@ -17,8 +17,8 @@ export class AuthService {
     }
 
     // get data user
-    async getData(id:string){
-        return await this.AuthRepository.getData(id)
+    async getData(token:string){
+        return await this.AuthRepository.getData(token)
     }
 
     // Register user
