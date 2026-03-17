@@ -14,9 +14,10 @@ import { NotesModule } from './notes/notes.module';
 import { PrismaService } from "./prisma.service";
 import { KeepAliveService } from "./KeepAlive.service";
 import { StudyBffModule } from "./study-bff/study-bff.module";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-    imports:[AuthModule, TaskModule, NotesModule, ScheduleModule.forRoot(), StudyBffModule],
+    imports:[AuthModule, TaskModule, NotesModule, ThemesModule, ScheduleModule.forRoot(), ConfigModule.forRoot(), StudyBffModule],
     providers:[PrismaService, KeepAliveService],
     exports:[PrismaService]
 })

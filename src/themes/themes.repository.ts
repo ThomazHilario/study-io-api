@@ -1,56 +1,59 @@
-import { Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 
-// Prisma
-import { PrismaService } from 'src/prisma.service'
+import { 
+    S3Client,
+    PutObjectCommand,
+    ListObjectsV2Command,
+} from '@aws-sdk/client-s3'
 
 @Injectable()
 
 export class ThemesRepository{
+    private client: S3Client;
 
-    // Constructor
-    constructor(private readonly prisma:PrismaService){}
-
-    // Return all themes
-    async findThemes(){
-        return await this.prisma.themes.findMany()
+    constructor(){
+        this.client = new S3Client({
+            region: "auto",
+            endpoint: process.env.R2_CLOUDFLARE_API_KEY!,
+            credentials: {
+                accessKeyId: process.env.R2_ACCESS_THEME_KEY!,
+                secretAccessKey: process.env.R2_SECRET_THEME_KEY!,
+            },
+        })
     }
 
-    // Insert themes
-    async insertTheme(image_url:string, video_url:string){
-        try {
+    async findThemes(theme: string = "themes"){
+        return await this.listFilesBucket(theme)
+    };
 
-            // allUsers
-            let allUsers = await this.prisma.user.findMany()
+    async uploadFile(bucketName: string, file: Express.Multer.File){
+        const command = new PutObjectCommand({
+            Bucket: bucketName,
+            Key: file.filename,
+            Body: file.buffer,
+            ContentType: file.mimetype
+        });
 
-            // Get admin verification
-            const verifiedUser = allUsers.find(user => user.email === process.env.TOKEN)
+        await this.client.send(command)
 
-            // Logic case is verified admin
-            if(verifiedUser){
-                // Create new theme
-                await this.prisma.themes.create({
-                    data:{
-                        image_url,
-                        video_url,
-                    }
-                })
-
-                // Return message
-                return {
-                    message: 'Created theme in database'
-                }
-            }
-
-            // Erro message
-            return {
-                message:'You not is verified',
-            }
-
-        } catch (error) {
-            return{
-                message:'Error! Not is possible create theme',
-            }
+        return {
+            status: HttpStatus.ACCEPTED,
+            message: "Upload realizado!"
         }
-            
+    };
+
+    async listFilesBucket(bucketName: string){
+        const command = new ListObjectsV2Command({
+            Bucket: bucketName,
+        });
+
+        const response = await this.client.send(command);
+
+        return response.Contents.map(file => {
+            return {
+                ...file,
+                url: `${process.env.URL_CLOUDFLARE_BUCKET!}/${file.Key}`
+            }
+        });
     }
 }

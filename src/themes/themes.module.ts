@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import {  } from '@aws-sdk/client-s3'
 import { ThemesService } from './themes.service';
 import { ThemesController } from './themes.controller';
 import { ThemesRepository } from './themes.repository';

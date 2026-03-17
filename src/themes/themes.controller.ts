@@ -15,9 +15,4 @@ export class ThemesController {
   async findThemes(){
     return await this.themesService.findThemes()
   }
-
-  @Post()
-  async insertTheme(@Body() params:ThemesDto){
-    return await this.themesService.insertTheme(params.image_url, params.video_url)
-  }
 }
