@@ -14,72 +14,67 @@ export class NotesController {
   @UseGuards(AuthGuard)
   @Get()
   async getAllNotes(@Headers() headers: any){
-    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+    try {
+      const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
-    const userId = data.id
+      const userId = data.id
 
-    // Return all notes
-    if(userId){
-      return await this.notesService.getAllNotes(userId)
-    }
+      if(userId){
+        return await this.notesService.getAllNotes(userId)
+      }
 
-    // Message section expire
-    return{
-      message:'Your section expired!'
+    } catch (error) {
+      return error
     }
   }
 
   @UseGuards(AuthGuard)
   @Post()
   async createNote(@Headers() headers: any, @Body() values:NotesDto){
-    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+    try {
+      const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
-    const userId = data.id
+      const userId = data.id
 
-    // Return all notes
-    if(userId){
-      return await this.notesService.createNote(values.name, userId)
-    }
+      if(userId){
+        return await this.notesService.createNote(values.name, userId)
+      }
 
-    // Message section expire
-    return{
-      message:'Your section expired!'
+    } catch (error) {
+      return error
     }
   }
 
   @UseGuards(AuthGuard)
   @Patch()
   async updateNote(@Headers() headers: any, @Body() values:NotesDto){
-    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+    try {
+      const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
-    const userId = data.id
+      const userId = data.id
 
-    // Return all notes
-    if(userId){
-      return await this.notesService.updateNote(values.name, values.noteId)
+      if(userId){
+        return await this.notesService.updateNote(values.name, values.noteId)
+      }
+    } catch (error) {
+      return error
     }
 
-    // Message section expire
-    return{
-      message:'Your section expired!'
-    }
   }
 
   @UseGuards(AuthGuard)
   @Delete()
   async deleteNote(@Headers() headers: any, @Body() values:NotesDto){
-    const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
+    try {
+      const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
-    const userId = data.id
+      const userId = data.id
 
-    // Return all notes
-    if(userId){
-      return await this.notesService.deleteNote(values.noteId)
-    }
-
-    // Message section expire
-    return{
-      message:'Your section expired!'
+      if(userId){
+        return await this.notesService.deleteNote(values.noteId)
+      }
+    } catch (error) {
+      return error
     }
   }
 }
