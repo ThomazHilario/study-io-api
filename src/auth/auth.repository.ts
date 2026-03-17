@@ -1,5 +1,5 @@
 // Nest Common
-import { Injectable } from "@nestjs/common";
+import { HttpStatus, Injectable } from "@nestjs/common";
 
 // Dto
 import { AuthRegisterDto } from "./dto/auth.register.dto";
@@ -10,6 +10,7 @@ import { SignInService } from "src/sign-in/sign-in.service";
 import { SignupService } from "src/signup/signup.service";
 import { PrismaService } from "src/prisma.service";
 import { JwtService } from "@nestjs/jwt";
+import { HttpStatusMessages } from "src/utils";
 
 
 @Injectable()
@@ -24,26 +25,24 @@ export class AuthRepository{
 
     // Verify token
     verifyToken(token:string){
-        try {
-            if(this.jwtService.verify(token)){
-                return true
-            }
-        } catch (error) {
-            console.log('Error verify token', error)
-            return false
+        if(this.jwtService.verify(token)){
+            return true
         }
+    
+        return false  
     }
 
     // get Data user
     async getData(token:string){
-        try {
-            // Find decoded information user for token
-            const user = this.jwtService.verify(token)
+        const tokenIsValid = this.verifyToken(token)
 
-            return user
-        } catch (error) {
-            console.log(error)
+        if(!tokenIsValid){
+            throw HttpStatusMessages[HttpStatus.UNAUTHORIZED]
         }
+
+        const user = this.jwtService.verify(token)
+
+        return user
     }
 
     // Register user

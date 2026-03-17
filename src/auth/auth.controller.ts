@@ -3,9 +3,6 @@ import { Controller, Get, Post, Body, UseGuards, Headers } from '@nestjs/common'
 // Service
 import { AuthService } from './auth.service';
 
-// Express
-import { Response } from 'express';
-
 // Dto
 import { AuthRegisterDto } from './dto/auth.register.dto';
 import { AuthLoginDto } from './dto/auth.login.dto';
@@ -25,23 +22,39 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('onAuth')
   async onAuth(@Headers() headers:any){
-    return this.authService.verifyToken(headers.authorization.split(' ')[1])
+    try {
+      return this.authService.verifyToken(headers.authorization.split(' ')[1])
+    } catch (error) {
+      return error
+    }
   }
 
   @UseGuards(AuthGuard)
   @Get('getData')
   async getDataUser(@Headers() headers:any){
-    const token = headers.authorization.split(' ')[1]
-    return await this.authService.getData(token)
+    try {
+      const token = headers.authorization.split(' ')[1]
+      return await this.authService.getData(token)
+    } catch (error) {
+      return error
+    }
   }
 
   @Post('register')
-  async registerUser(@Body() data: AuthRegisterDto, res:Response){
-    return await this.authService.registerUser(data)
+  async registerUser(@Body() data: AuthRegisterDto){
+    try {
+      return await this.authService.registerUser(data)
+    } catch (error) {
+      return error
+    }
   }
 
   @Post('login')
   async loginUser(@Body() data:AuthLoginDto){
-    return await this.authService.loginUser(data)
+    try {
+      return await this.authService.loginUser(data)
+    } catch (error) {
+      return error
+    }
   }
 }

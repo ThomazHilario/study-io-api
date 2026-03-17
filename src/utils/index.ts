@@ -1,1 +1,2 @@
-export * from './setCookies'
+export * from './config';
+export * from './functions';
