@@ -42,19 +42,11 @@ export class AuthController {
 
   @Post('register')
   async registerUser(@Body() data: AuthRegisterDto){
-    try {
-      return await this.authService.registerUser(data)
-    } catch (error) {
-      return error
-    }
+    return await this.authService.registerUser(data)
   }
 
   @Post('login')
   async loginUser(@Body() data:AuthLoginDto){
-    try {
-      return await this.authService.loginUser(data)
-    } catch (error) {
-      return error
-    }
+    return await this.authService.loginUser(data)
   }
 }
