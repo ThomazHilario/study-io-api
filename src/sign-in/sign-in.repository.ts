@@ -20,7 +20,7 @@ export class SignInRepository {
       });
 
       if (!user) {
-        throw new BadRequestException('Email not found');
+        throw new Error('Email not found');
       }
 
       const passwordIsEqualForHash = await bcrypt.compare(
@@ -29,16 +29,16 @@ export class SignInRepository {
       );
 
       if (!passwordIsEqualForHash) {
-        throw new BadRequestException('Invalid password');
+        throw new Error('Invalid password');
       }
 
       return user;
     } catch (error) {
-      if (error instanceof BadRequestException) {
-        throw error;
-      }
-
-      throw new BadRequestException('Unexpected error');
+      throw new BadRequestException({
+        statusCode: HttpStatus.CONFLICT,
+        typeError: 'not is possible user create in database!',
+        message: error.message,
+      });
     }
   }
 }
