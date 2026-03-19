@@ -18,8 +18,12 @@ export class SignupRepository{
             } })
 
             // User exist in database
-            if(user){
-                throw new Error('This user exist in database!')
+            if(user && user.email === email){
+                throw new Error('Ops! Este e-mail já consta em nossa base de dados.')
+            }
+
+            if(user && user.username === username){
+                throw new Error('Ops! Este nome de usuário já foi escolhido.')
             }
 
             // Generate hash

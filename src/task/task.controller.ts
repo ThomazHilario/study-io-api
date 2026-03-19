@@ -16,7 +16,6 @@ export class TaskController {
   @UseGuards(AuthGuard)
   @Post()
   async createTask(@Headers() headers: any, @Body() task:TaskDto){
-    try {
       const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
       const userId = data.id
@@ -24,15 +23,11 @@ export class TaskController {
       if(userId){
         return await this.taskService.createTask(task.name, userId)
       }
-    } catch(error) {
-      return error
-    }
   }
 
   @UseGuards(AuthGuard)
   @Get()
   async getAllTasksForUser(@Headers() headers: any){
-    try {
       const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
       const userId = data.id
@@ -40,16 +35,11 @@ export class TaskController {
       if(userId){
         return await this.taskService.getAllTasksForUser(userId)
       }
-
-    } catch (error) {
-      return error
-    }
   }
 
   @UseGuards(AuthGuard)
   @Patch()
   async updateTask(@Headers() headers: any, @Body() taskValues:TaskUpdateDto){
-    try {
       const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
       const userId = data.id
@@ -57,16 +47,11 @@ export class TaskController {
       if(userId){
         return await this.taskService.updateTask(taskValues)
       }
-
-    } catch (error) {
-      return error
-    }
   }
 
   @UseGuards(AuthGuard)
   @Delete('/:taskId')
   async deleteTask(@Headers() headers: any, @Param('taskId') taskId:string){
-   try {
      const data = await this.AuthService.getData(headers.authorization.split(' ')[1])
 
       const userId = data.id
@@ -74,9 +59,6 @@ export class TaskController {
       if(userId){
         return await this.taskService.deleteTask(taskId)
       }
-   } catch(error) {
-    return error
-   }
   }
-  
+
 }

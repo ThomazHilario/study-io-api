@@ -13,19 +13,13 @@ export class SignupController {
   constructor(private readonly signupService: SignupService) {}
 
   @Post()
-  async createUser(@Res() response: Response, @Body() values: SignupDto) {
-    try {
-      // Create user and retur id
-      const user = await this.signupService.createUser(
+  async createUser(@Body() values: SignupDto) {
+    const user = await this.signupService.createUser(
         values.email,
         values.username,
         values.password,
       );
 
-      // Return
-      return response.send(user);
-    } catch (error) {
-      return response.status(error.status || 500).send(error);
-    }
+    return user;
   }
 }
