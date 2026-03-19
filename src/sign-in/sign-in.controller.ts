@@ -15,18 +15,12 @@ export class SignInController {
   constructor(private readonly signInService: SignInService) {}
 
   @Post()
-  async signIn(@Body() credentials: SignInDto, @Res() response: Response) {
-    try {
-      const result = await this.signInService.signIn(
-        credentials.email,
-        credentials.password,
-      );
+  async signIn(@Body() credentials: SignInDto) {
+    const result = await this.signInService.signIn(
+      credentials.email,
+      credentials.password,
+    );
 
-      return response.status(200).send(result);
-    } catch (error) {
-      return response.status(error.status || 500).send({
-        message: error.message || 'Unexpected error',
-      });
-    }
+    return result;
   }
 }

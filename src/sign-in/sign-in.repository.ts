@@ -1,47 +1,44 @@
 // NestJS
-import { BadRequestException, HttpStatus, Injectable } from "@nestjs/common";
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 
 // Bcrypt
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
 
 // Prisma service
-import { PrismaService } from "../prisma.service";
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
-export class SignInRepository{
-    // Constructor
-    constructor(private readonly prisma:PrismaService){}
+export class SignInRepository {
+  // Constructor
+  constructor(private readonly prisma: PrismaService) {}
 
-    // SignIN user
-    async signIn(email:string, password:string){
-        try {
+  // SignIN user
+  async signIn(email: string, password: string) {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { email },
+      });
 
-            // Get all users
-            const user = await this.prisma.user.findUnique({
-                where:{
-                    email
-                }
-            })
+      if (!user) {
+        throw new BadRequestException('Email not found');
+      }
 
-            // Case have user
-            if(user){
-                // Compare hash in databse with hash digited
-                const passwordIsEqualForHash = await bcrypt.compare(password, user.password)
+      const passwordIsEqualForHash = await bcrypt.compare(
+        password,
+        user.password,
+      );
 
-                if(passwordIsEqualForHash) return user
-               
-                throw new Error('Password invalid!')
-            }
+      if (!passwordIsEqualForHash) {
+        throw new BadRequestException('Invalid password');
+      }
 
-            //  message for user
-            throw new Error('Email not is exist in database!')
-            
-        } catch (error) {
-            throw new BadRequestException ({
-                statusCode: HttpStatus.CONFLICT,
-                typeError: 'Login',
-                message: error.message
-            })      
-        }
+      return user;
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+
+      throw new BadRequestException('Unexpected error');
     }
+  }
 }
