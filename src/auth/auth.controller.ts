@@ -32,12 +32,8 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('getData')
   async getDataUser(@Headers() headers:any){
-    try {
       const token = headers.authorization.split(' ')[1]
       return await this.authService.getData(token)
-    } catch (error) {
-      return error
-    }
   }
 
   @Post('register')

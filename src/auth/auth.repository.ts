@@ -1,5 +1,5 @@
 // Nest Common
-import { HttpStatus, Injectable } from "@nestjs/common";
+import { UnauthorizedException, HttpStatus, Injectable } from "@nestjs/common";
 
 // Dto
 import { AuthRegisterDto } from "./dto/auth.register.dto";
@@ -24,25 +24,34 @@ export class AuthRepository{
     ){}
 
     // Verify token
-    verifyToken(token:string){
-        if(this.jwtService.verify(token)){
-            return true
+    verifyToken(token: string): boolean {
+        try {
+            this.jwtService.verify(token);
+            return true;
+        } catch (error) {
+            return false;
         }
-    
-        return false  
     }
 
     // get Data user
     async getData(token:string){
-        const tokenIsValid = this.verifyToken(token)
+        try {
+            const tokenIsValid = this.verifyToken(token)
 
-        if(!tokenIsValid){
-            throw HttpStatusMessages[HttpStatus.UNAUTHORIZED]
+            if (!tokenIsValid){
+                throw HttpStatusMessages[HttpStatus.UNAUTHORIZED].description
+            }
+
+            const user = this.jwtService.verify(token)
+
+            return user
+        } catch (error) {
+            throw new UnauthorizedException({
+                statusCode: HttpStatus.UNAUTHORIZED,
+                typeError: 'Token expired!',
+                message: error.message,
+            });
         }
-
-        const user = this.jwtService.verify(token)
-
-        return user
     }
 
     // Register user
